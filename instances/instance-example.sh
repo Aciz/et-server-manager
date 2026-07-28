@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 # Fill you your instance details here, and rename this file.
-# The filename you choose will be the "instance" name you pass to the scripts
+# The filename you choose will be the "instance" name you pass to the scripts,
+# and the tmux session for the server will be created using that name.
 # NOTE: this is a shell script, so you may perform variable substitutions here
 
-# Instance name, this is only used in logging if the unexpectedly exits.
+# Instance name, this is only used in logging if the server unexpectedly exits.
 NAME="Instance example"
 # Path to the server executable
 BINARY=
