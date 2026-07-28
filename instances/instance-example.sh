@@ -5,8 +5,6 @@
 # and the tmux session for the server will be created using that name.
 # NOTE: this is a shell script, so you may perform variable substitutions here
 
-# Instance name, this is only used in logging if the server unexpectedly exits.
-NAME="Instance example"
 # Path to the server executable
 BINARY=
 # Path used for 'fs_basepath'

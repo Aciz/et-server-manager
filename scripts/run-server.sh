@@ -46,7 +46,7 @@ while true; do
 
 	if [[ "$status" -ne 0 ]]; then
 		# TODO: save crashlog
-		echo "[$(date)] $NAME ($PORT) exited unexpectedly (status code $status), restarting..."
+		echo "[$(date)] '$instance' exited unexpectedly (status code $status), restarting..."
 	fi
 
 	sleep 5
