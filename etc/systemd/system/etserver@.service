@@ -1,0 +1,15 @@
+[Unit]
+Description=Enemy Territory server instance (%i)
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=etserver
+Group=etserver
+ExecStart=/srv/et/scripts/et-server.sh start %i
+ExecStop=/srv/et/scripts/et-server.sh stop %i
+ExecReload=/srv/et/scripts/et-server.sh restart %i
+
+[Install]
+WantedBy=multi-user.target
