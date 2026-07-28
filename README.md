@@ -20,6 +20,13 @@ A set of shell scripts & systemd units to manage ET servers on a Linux machine.
   $ systemctl enable --now etserver@<instance>.service  
   ```
   * If you do not want to use systemd to manage the process, you may run `scripts/et-server.sh` manually instead, and setup your preferred method of managing the server.
+* To access the server console, attach to the created tmux session
+  ```sh
+  $ tmux a -t <instance>
+
+  # Or if you are logged in on a different user
+  $ sudo -u <server-username> tmux a -t <instance>
+  ```
 
 ## Customization
 
@@ -28,8 +35,8 @@ This is primarily intended to be integrated with systemd, to manage starting, st
 The script, as provided, assumes a user called `etserver`, who's homepath is `/srv/et`. The default setup assumes that this directory contains directories `scripts` and `instances`.
 
 To customize this to fit your environment, make sure you change the following files:
-* `scripts/paths.sh` - edit the paths and user/group to fit your environment.
+* `scripts/paths.sh` - edit the paths to fit your environment.
   * ⚠️ NOTE ⚠️ this file is sourced by both `scripts/et-server.sh` and `scripts/run-server.sh`. If you relocate this, make sure you change the source path in these files too.
 * `instances/instance-example.sh` - setup variables for your server in this, and rename it to an instance name. The tmux session that runs the server will be created using this file's name.
-* `etc/systemd/system/etserver@.service` - edit the paths to fit your environment.
+* `etc/systemd/system/etserver@.service` - edit the paths and user/group to fit your environment.
 * `etc/tmpfiles.d/etserver.conf` - optional, this configures the default runtime path using `systemd-tmpfiles` for the server to store state files in. You do not need this if you setup `STATE_PATH` in `scripts/paths.sh` to point to a location that your user has write access to.
