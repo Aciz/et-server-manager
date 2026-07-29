@@ -54,10 +54,13 @@ while true; do
 		crashlog="$HOMEPATH/$GAME/crashlog-$(date +%F_%H-%M-%S).log"
 
 		if [[ -f "$logfile" ]]; then
-			echo "Saving crashlog to '$crashlog'"
-			cp "$logfile" "$crashlog" &>/dev/null
+			if cp "$logfile" "$crashlog"; then
+				echo "Saved crash log to '$crashlog'"
+			else
+				echo "Failed to save crash log." >&2
+			fi
 		else
-			echo "Logging not enable on server, unable to save crashlog."
+			echo "Logfile not found in '$HOMEPATH/$GAME', unable to save crashlog."
 		fi
 	fi
 
