@@ -5,6 +5,7 @@ A set of shell scripts & systemd units to manage ET servers on a Linux machine.
 * Systemd integration to easily manage the server.
 * Each server starts up with a tmux session, to provide interactive server console.
 * Automatic recovery on crash - if a server crashes, it will automatically restart after 5 seconds.
+* Configurable auto-restarting of servers on schedule, to work around high uptime issues.
 
 ## Usage
 
@@ -27,6 +28,10 @@ A set of shell scripts & systemd units to manage ET servers on a Linux machine.
   # Or if you are logged in on a different user
   $ sudo -u <server-username> tmux a -t <instance>
   ```
+* Optionally, enable a restart timer for each service
+  ```sh
+  $ systemctl enable --now etserver-restart@<instance>.timer
+  ```
 
 ## Customization
 
@@ -40,3 +45,4 @@ To customize this to fit your environment, make sure you change the following fi
 * `instances/instance-example.sh` - setup variables for your server in this, and rename it to an instance name. The tmux session that runs the server will be created using this file's name.
 * `etc/systemd/system/etserver@.service` - edit the paths and user/group to fit your environment.
 * `etc/tmpfiles.d/etserver.conf` - optional, this configures the default runtime path using `systemd-tmpfiles` for the server to store state files in. You do not need this if you setup `STATE_PATH` in `scripts/paths.sh` to point to a location that your user has write access to.
+* `etc/systemd/system/etserver-restart@.timer` - optional, edit the time at which you want your server(s) to automatically restart. By default, this is set to 05:00 (5am) each day.

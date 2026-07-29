@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart ET server instances on schedule
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl reload etserver@%i.service
