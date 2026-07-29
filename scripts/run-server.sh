@@ -45,8 +45,20 @@ while true; do
 	fi
 
 	if [[ "$status" -ne 0 ]]; then
-		# TODO: save crashlog
 		echo "[$(date)] '$instance' exited unexpectedly (status code $status), restarting..."
+
+		# NOTE: this is a bit naive - if *any* logfile exists, it will be copied,
+		# this might be an old logfile, but the assumption here is that the server
+		# has logging enabled anyway (I mean why would you not?)
+		logfile="$HOMEPATH/$GAME/etconsole.log"
+		crashlog="$HOMEPATH/$GAME/crashlog-$(date +%F_%H-%M-%S).log"
+
+		if [[ -f "$logfile" ]]; then
+			echo "Saving crashlog to '$crashlog'"
+			cp "$logfile" "$crashlog" &>/dev/null
+		else
+			echo "Logging not enable on server, unable to save crashlog."
+		fi
 	fi
 
 	sleep 5

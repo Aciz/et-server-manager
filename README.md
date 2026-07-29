@@ -5,6 +5,7 @@ A set of shell scripts & systemd units to manage ET servers on a Linux machine.
 * Systemd integration to easily manage the server.
 * Each server starts up with a tmux session, to provide interactive server console.
 * Automatic recovery on crash - if a server crashes, it will automatically restart after 5 seconds.
+* Automatic crashlog generation - if the server has a logfile, it will be automatically saved in the event of a server crash.
 * Configurable auto-restarting of servers on schedule, to work around high uptime issues.
 
 ## Usage
