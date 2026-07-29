@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! source "$HOME"/scripts/paths.sh 2>/dev/null; then
+if ! source "$HOME"/scripts/paths.sh &>/dev/null; then
 	echo "Could not source 'paths.sh', please make sure it's located in '$HOME/scripts/', or edit the source location."
 	exit 1
 fi
@@ -13,7 +13,7 @@ stopfile="$STATE_PATH/${instance}.stop"
 restartfile="$STATE_PATH/${instance}.restart"
 
 # cleanup in case last shutdown was not a clean one
-rm -f "$stopfile" "$restartfile" 2>/dev/null
+rm -f "$stopfile" "$restartfile" &>/dev/null
 
 mkdir -p "$(dirname "$pidfile")"
 echo $$ >"$pidfile"

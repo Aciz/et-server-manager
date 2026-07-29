@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! source "$HOME"/scripts/paths.sh 2>/dev/null; then
+if ! source "$HOME"/scripts/paths.sh &>/dev/null; then
 	echo "Could not source '$HOME/scripts/paths.sh'. Please make sure the path is correct, or edit the source location."
+	exit 1
+fi
+
+# ensure tmux is installed
+if ! command -v tmux &>/dev/null; then
+	echo "Could not find tmux on this system, ensure it's installed."
 	exit 1
 fi
 
@@ -34,12 +40,12 @@ fi
 start_server() {
 	# make sure we're not already running
 	if [[ -r "$pidfile" ]] &&
-		kill -0 "$(cat "$pidfile")" 2>/dev/null; then
+		kill -0 "$(cat "$pidfile")" &>/dev/null; then
 		echo "Server '$instance' is already running."
 		return
 	fi
 
-	if tmux has-session -t "$instance" 2>/dev/null; then
+	if tmux has-session -t "$instance" &>/dev/null; then
 		echo "Reusing existing tmux session '$instance'."
 	else
 		echo "Creating a new tmux session '$instance' for the server."
@@ -51,7 +57,7 @@ start_server() {
 }
 
 stop_server() {
-	if ! tmux has-session -t "$instance" 2>/dev/null; then
+	if ! tmux has-session -t "$instance" &>/dev/null; then
 		echo "No tmux session found for instance '$instance'."
 		return
 	fi
@@ -65,13 +71,13 @@ stop_server() {
 
 	# let the server shut down cleanly, as systemd sends SIGKILL
 	# to all child processes once the main process exits
-	while kill -0 "$(cat "$pidfile")" 2>/dev/null; do
+	while kill -0 "$(cat "$pidfile")" &>/dev/null; do
 		sleep 0.5
 	done
 }
 
 restart_server() {
-	if ! tmux has-session -t "$instance" 2>/dev/null; then
+	if ! tmux has-session -t "$instance" &>/dev/null; then
 		echo "No tmux session found for instance '$instance'."
 		return
 	fi
